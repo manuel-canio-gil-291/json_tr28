@@ -1070,8 +1070,8 @@ public class EventsStatBomb {
                     datosEntrada.get(i).getPlayer().getName(), datosEntrada.get(i).getMinute(),
                     datosEntrada.get(i).getSecond()));
                 }
-                datosSalida.add(eventsDataOutput);
             }
+            datosSalida.add(eventsDataOutput);
             objectWriter = Json.mapper().writer(new DefaultPrettyPrinter());
             objectWriter.writeValue(new File("eventos.json"), datosSalida);
         }
