@@ -12,6 +12,13 @@ public class Goleador {
         this.segundo = 0;
     }
 
+    public Goleador(String equipo, String nombre, Integer minuto, Integer segundo) {
+        this.equipo = equipo;
+        this.nombre = nombre;
+        this.minuto = minuto;
+        this.segundo = segundo;
+    }
+
     public String getEquipo() {
         return equipo;
     }
