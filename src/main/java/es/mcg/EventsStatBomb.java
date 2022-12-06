@@ -48,6 +48,7 @@ import es.mcg.input.data.Team;
 import es.mcg.input.data.Technique;
 import es.mcg.input.data.Type;
 import es.mcg.output.data.DataOutput;
+import es.mcg.output.data.Goleador;
 import es.mcg.utils.Json;
 
 public class EventsStatBomb {
@@ -1058,6 +1059,18 @@ public class EventsStatBomb {
                     }
                     datosEntrada.add(eventsData);
                 }
+            }
+            DataOutput eventsDataOutput = new DataOutput();
+            for(int i = 0; i < datosEntrada.size(); i++)
+            {
+                if(datosEntrada.get(i).getShot().getType().getName().equals("Open Play") &&
+                datosEntrada.get(i).getShot().getOutcome().getName().equals("Goal"))
+                {
+                    eventsDataOutput.setGoleador(new Goleador(datosEntrada.get(i).getPossession_team().getName(), 
+                    datosEntrada.get(i).getPlayer().getName(), datosEntrada.get(i).getMinute(),
+                    datosEntrada.get(i).getSecond()));
+                }
+                datosSalida.add(eventsDataOutput);
             }
             objectWriter = Json.mapper().writer(new DefaultPrettyPrinter());
             objectWriter.writeValue(new File("eventos.json"), datosSalida);
