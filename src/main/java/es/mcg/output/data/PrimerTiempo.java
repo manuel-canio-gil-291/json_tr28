@@ -9,6 +9,11 @@ public class PrimerTiempo {
         this.italia = 0.0;
     }
 
+    public PrimerTiempo(Double espania, Double italia) {
+        this.espania = espania;
+        this.italia = italia;
+    }
+
     public Double getEspania() {
         return espania;
     }

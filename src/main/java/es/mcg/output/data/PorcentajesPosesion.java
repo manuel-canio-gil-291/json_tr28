@@ -9,6 +9,13 @@ public class PorcentajesPosesion {
     {
 
     }
+    
+    public PorcentajesPosesion(PrimerTiempo primer_tiempo, SegundoTiempo segundo_tiempo,
+            PartidoCompleto partido_completo) {
+        this.primer_tiempo = primer_tiempo;
+        this.segundo_tiempo = segundo_tiempo;
+        this.partido_completo = partido_completo;
+    }
 
     public PrimerTiempo getPrimer_tiempo() {
         return primer_tiempo;

@@ -11,6 +11,12 @@ public class PorteroJugador {
         this.pases = 0;
     }
 
+    public PorteroJugador(String equipo, String nombre, Integer pases) {
+        this.equipo = equipo;
+        this.nombre = nombre;
+        this.pases = pases;
+    }
+
     public String getEquipo() {
         return equipo;
     }

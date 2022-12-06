@@ -11,6 +11,12 @@ public class Luchador {
         this.duelos_ganados = 0;
     }
 
+    public Luchador(String equipo, String nombre, Integer duelos_ganados) {
+        this.equipo = equipo;
+        this.nombre = nombre;
+        this.duelos_ganados = duelos_ganados;
+    }
+
     public String getEquipo() {
         return equipo;
     }

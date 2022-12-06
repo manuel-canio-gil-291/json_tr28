@@ -11,6 +11,12 @@ public class Referencia {
         this.pases = 0;
     }
 
+    public Referencia(String equipo, String nombre, Integer pases) {
+        this.equipo = equipo;
+        this.nombre = nombre;
+        this.pases = pases;
+    }
+
     public String getEquipo() {
         return equipo;
     }
