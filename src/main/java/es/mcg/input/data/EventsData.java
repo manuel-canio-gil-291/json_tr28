@@ -3,9 +3,9 @@ package es.mcg.input.data;
 import java.util.Date;
 
 public class EventsData {
-    private String data;
+    private String id;
     private Integer index, period;
-    private Date timestap;
+    private Date timestamp;
     private Integer minute, second;
     private Type type;
     private Integer possession;
@@ -38,7 +38,7 @@ public class EventsData {
 
     public EventsData()
     {
-        this.data = "";
+        this.id = "";
         this.index = 0;
         this.period = 0;
         this.minute = 0;
@@ -53,12 +53,12 @@ public class EventsData {
         this.related_events = null;
     }
 
-    public String getData() {
-        return data;
+    public String getId() {
+        return id;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Integer getIndex() {
@@ -77,12 +77,12 @@ public class EventsData {
         this.period = period;
     }
 
-    public Date getTimestap() {
-        return timestap;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimestap(Date timestap) {
-        this.timestap = timestap;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Integer getMinute() {
