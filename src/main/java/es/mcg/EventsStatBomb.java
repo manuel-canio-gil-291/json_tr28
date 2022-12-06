@@ -65,8 +65,6 @@ public class EventsStatBomb {
         {
             file = new File("3795220.json");
             fileContent = FileUtils.readFileToString(file, EventsStatBomb.ENCODE);
-            objectWriter = Json.mapper().writer(new DefaultPrettyPrinter());
-            objectWriter.writeValue(new File("eventos.json"), datosSalida);
             datosSalida = new ArrayList<DataOutput>();
             datosEntrada = new ArrayList<EventsData>();
             JsonNode datosEntradaJsonNode = Json.mapper().readTree(fileContent);
