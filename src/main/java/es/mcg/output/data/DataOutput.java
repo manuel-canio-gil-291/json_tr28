@@ -24,7 +24,11 @@ public class DataOutput {
         return referencia;
     }
 
-    public void setReferencia(Referencia referencia) {
+    public void setReferenciaEs(Referencia referencia) {
+        this.referencia = referencia;
+    }
+
+    public void setReferenciaIt(Referencia referencia) {
         this.referencia = referencia;
     }
 
