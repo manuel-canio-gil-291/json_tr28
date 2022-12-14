@@ -17,7 +17,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import es.mcg.errors.EventsError;
 import es.mcg.input.data.DataInput;
+import es.mcg.input.data.Outcome;
+import es.mcg.input.data.Player;
 import es.mcg.input.data.PossessionTeam;
+import es.mcg.input.data.Shot;
+import es.mcg.input.data.Team;
 import es.mcg.output.data.Goleador;
 import es.mcg.output.data.PartidoCompleto;
 import es.mcg.output.data.PorcentajesPosesion;
@@ -103,27 +107,32 @@ public class EventsStatBomb {
                     }
                     if(eventsDataJsonNode.has("team"))
                     {
+                        Team team = null;
                         JsonNode teamNode = eventsDataJsonNode.get("team");
                         if(teamNode.isObject())
                         {
+                            team = new Team();
                             JsonNode teamObjectNode = (ObjectNode) teamNode;
                             if(teamObjectNode.has("name"))
                             {
                                 final JsonNode nameNode = teamObjectNode.get("name");
-                                equipo = nameNode.asText();
+                                team.setName(nameNode.asText());
                             }
                         }
+                        input.setTeam(team);
                     }
                     if(eventsDataJsonNode.has("player"))
                     {
+                        Player player = null;
                         JsonNode playerNode = eventsDataJsonNode.get("player");
                         if(playerNode.isObject())
                         {
+                            player = new Player();
                             JsonNode playerObjectNode = (ObjectNode) playerNode;
                             if(playerObjectNode.has("name"))
                             {
                                 final JsonNode nameNode = playerObjectNode.get("name");
-                                jugador = nameNode.asText();
+                                player.setName(nameNode.asText());
                             }
                         }
                     }
@@ -140,20 +149,25 @@ public class EventsStatBomb {
                     }
                     if(eventsDataJsonNode.has("shot"))
                     {
+                        Shot shot = null;
                         JsonNode shotNode = eventsDataJsonNode.get("shot");
                         if(shotNode.isObject())
                         {
+                            shot = new Shot();
                             JsonNode shotObjectNode = (ObjectNode) shotNode;
                             if(shotObjectNode.has("outcome"))
                             {
+                                Outcome outcome = null;
                                 JsonNode outcomeNode = shotObjectNode.get("outcome");
                                 if(outcomeNode.isObject())
                                 {
+                                    outcome = new Outcome();
                                     JsonNode outcomeObjectNode = (ObjectNode) outcomeNode;
                                     if(outcomeObjectNode.has("name"))
                                     {
                                         Goleador goleador = new Goleador();
                                         final JsonNode nameNode = outcomeObjectNode.get("name");
+                                        outcome.setName(nameNode.asText());
                                         if(nameNode.asText().equals("Goal"))
                                         {
                                             goleador.setMinuto(minute);
@@ -164,8 +178,10 @@ public class EventsStatBomb {
                                         }
                                     }
                                 }
+                                shot.setOutcome(outcome);
                             }
                         }
+                        input.setShot(shot);
                     }
                     if(eventsDataJsonNode.has("pass"))
                     {
