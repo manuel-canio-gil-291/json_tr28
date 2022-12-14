@@ -24,6 +24,7 @@ import es.mcg.input.data.PossessionTeam;
 import es.mcg.input.data.Recipient;
 import es.mcg.input.data.Shot;
 import es.mcg.input.data.Team;
+import es.mcg.output.data.DataOutput;
 import es.mcg.output.data.Goleador;
 import es.mcg.output.data.PartidoCompleto;
 import es.mcg.output.data.PorcentajesPosesion;
@@ -41,6 +42,7 @@ public class EventsStatBomb {
         String fileContent;
         ObjectWriter objectWriter = null;
         List<DataInput> inputData = null;
+        List<DataOutput> outputData = null;
         List<Goleador> goleadores = null;
         List<Referencia> referencias = null;
         Goleador goleador = null;
@@ -131,33 +133,21 @@ public class EventsStatBomb {
                                 player.setName(nameNode.asText());
                             }
                         }
-                    }
-                    if(eventsDataJsonNode.has("goalkeeper"))
-                    {
-                        if(equipo.equals("Italy"))
-                        {
-                            pasePorteroItalia++;
-                        }
-                        else if(equipo.equals("Spain"))
-                        {
-                            pasePorteroEspania++;
-                        }
+                        input.setPlayer(player);
                     }
                     if(eventsDataJsonNode.has("shot"))
                     {
-                        Shot shot = null;
                         JsonNode shotNode = eventsDataJsonNode.get("shot");
                         if(shotNode.isObject())
                         {
-                            shot = new Shot();
+                            Shot shot = new Shot();
                             JsonNode shotObjectNode = (ObjectNode) shotNode;
                             if(shotObjectNode.has("outcome"))
                             {
-                                Outcome outcome = null;
                                 JsonNode outcomeNode = shotObjectNode.get("outcome");
                                 if(outcomeNode.isObject())
                                 {
-                                    outcome = new Outcome();
+                                    Outcome outcome = new Outcome();
                                     JsonNode outcomeObjectNode = (ObjectNode) outcomeNode;
                                     if(outcomeObjectNode.has("name"))
                                     {
@@ -168,6 +158,17 @@ public class EventsStatBomb {
                                 }
                             }
                             input.setShot(shot);
+                        }
+                    }
+                    if(eventsDataJsonNode.has("goalkeeper"))
+                    {
+                        if(equipo.equals("Italy"))
+                        {
+                            pasePorteroItalia++;
+                        }
+                        else if(equipo.equals("Spain"))
+                        {
+                            pasePorteroEspania++;
                         }
                     }
                     if(eventsDataJsonNode.has("pass"))
@@ -198,57 +199,59 @@ public class EventsStatBomb {
                         }
                     }
                     inputData.add(input);
-                    for(int i = 0; i < inputData.size(); i++)
-                    {
-                        if(inputData.get(i).getPossession_team().getName().equals("Spain"))
-                        {
-                            posesionesEspania = posesionesEspania + 1.0;
-                        }
-                        else if(inputData.get(i).getPossession_team().getName().equals("Italy"))
-                        {
-                            posesionesItalia = posesionesItalia + 1.0;
-                        }
-                        if(inputData.get(i).getMinute() == 45 && inputData.get(i).getSecond() == 2)
-                        {
-                            primerTiempo = new PrimerTiempo();
-                            Double porcentajePosesionEspania = 0.0, porcentajePosesionItalia = 0.0;
-                            porcentajePosesionEspania = ((posesionesEspania/posesionesItalia)*100.0);
-                            porcentajePosesionItalia = 100.0 - porcentajePosesionEspania;
-                            primerTiempo.setEspania(porcentajePosesionEspania);
-                            primerTiempo.setItalia(porcentajePosesionItalia);
-                            posesionesEspania = 0.0;
-                            posesionesItalia = 0.0;
-                        }
-                        if(inputData.get(i).getMinute() == 90 && inputData.get(i).getSecond() == 48)
-                        {
-                            segundoTiempo = new SegundoTiempo();
-                            Double porcentajePosesionEspania = 0.0, porcentajePosesionItalia = 0.0;
-                            porcentajePosesionEspania = ((posesionesEspania/posesionesItalia)*100.0);
-                            porcentajePosesionItalia = 100.0 - porcentajePosesionEspania;
-                            segundoTiempo.setEspania(porcentajePosesionEspania);
-                            segundoTiempo.setItalia(porcentajePosesionItalia);
-                            partidoCompleto = new PartidoCompleto();
-                            partidoCompleto.setEspania((primerTiempo.getEspania()+segundoTiempo.getEspania())/2);
-                            partidoCompleto.setItalia((primerTiempo.getItalia()+segundoTiempo.getItalia())/2);
-                            porcentajesPosesion = new PorcentajesPosesion(primerTiempo, segundoTiempo, partidoCompleto);
-                        }
-                        if(inputData.get(i).getShot().getOutcome().getName().equals("Goal"))
-                        {
-                            goleador = new Goleador();
-                            goleador.setMinuto(inputData.get(i).getMinute());
-                            goleador.setSegundo(inputData.get(i).getSecond());
-                            goleador.setEquipo(inputData.get(i).getPossession_team().getName());
-                            goleador.setNombre(inputData.get(i).getPlayer().getName());
-                        }
-                        if(inputData.get(i).getPass().getRecipient().getName().equals("Pedro González López"))
-                        {
-                            pasesEspania++;
-                        }
-                        else if(inputData.get(i).getPass().getRecipient().getName().equals("Leonardo Bonucci"))
-                        {
-                            pasesItalia++;
-                        }
-                    }
+                    
+                }
+            }
+            outputData = new ArrayList<DataOutput>();
+            for(int i = 0; i < inputData.size(); i++)
+            {
+                if(inputData.get(i).getPossession_team().getName().equals("Spain"))
+                {
+                    posesionesEspania = posesionesEspania + 1.0;
+                }
+                else if(inputData.get(i).getPossession_team().getName().equals("Italy"))
+                {
+                    posesionesItalia = posesionesItalia + 1.0;
+                }
+                if(inputData.get(i).getMinute() == 45 && inputData.get(i).getSecond() == 2)
+                {
+                    primerTiempo = new PrimerTiempo();
+                    Double porcentajePosesionEspania = 0.0, porcentajePosesionItalia = 0.0;
+                    porcentajePosesionEspania = ((posesionesEspania/posesionesItalia)*100.0);
+                    porcentajePosesionItalia = 100.0 - porcentajePosesionEspania;
+                    primerTiempo.setEspania(porcentajePosesionEspania);
+                    primerTiempo.setItalia(porcentajePosesionItalia);
+                    posesionesEspania = 0.0;
+                    posesionesItalia = 0.0;
+                }
+                if(inputData.get(i).getMinute() == 90 && inputData.get(i).getSecond() == 48)
+                {
+                    segundoTiempo = new SegundoTiempo();
+                    Double porcentajePosesionEspania = 0.0, porcentajePosesionItalia = 0.0;
+                    porcentajePosesionEspania = ((posesionesEspania/posesionesItalia)*100.0);
+                    porcentajePosesionItalia = 100.0 - porcentajePosesionEspania;
+                    segundoTiempo.setEspania(porcentajePosesionEspania);
+                    segundoTiempo.setItalia(porcentajePosesionItalia);
+                    partidoCompleto = new PartidoCompleto();
+                    partidoCompleto.setEspania((primerTiempo.getEspania()+segundoTiempo.getEspania())/2);
+                    partidoCompleto.setItalia((primerTiempo.getItalia()+segundoTiempo.getItalia())/2);
+                    porcentajesPosesion = new PorcentajesPosesion(primerTiempo, segundoTiempo, partidoCompleto);
+                }
+                if(inputData.get(i).getShot().getOutcome().getName().equals("Goal"))
+                {
+                    goleador = new Goleador();
+                    goleador.setMinuto(inputData.get(i).getMinute());
+                    goleador.setSegundo(inputData.get(i).getSecond());
+                    goleador.setEquipo(inputData.get(i).getPossession_team().getName());
+                    goleador.setNombre(inputData.get(i).getPlayer().getName());
+                }
+                if(inputData.get(i).getPass().getRecipient().getName().equals("Pedro González López"))
+                {
+                    pasesEspania++;
+                }
+                else if(inputData.get(i).getPass().getRecipient().getName().equals("Leonardo Bonucci"))
+                {
+                    pasesItalia++;
                 }
             }
             porteroJugador = new PorteroJugador();
