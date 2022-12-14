@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import es.mcg.errors.EventsError;
+import es.mcg.input.data.DataInput;
 import es.mcg.output.data.Goleador;
 import es.mcg.output.data.PartidoCompleto;
 import es.mcg.output.data.PorcentajesPosesion;
@@ -32,8 +33,10 @@ public class EventsStatBomb {
         File file = null, file2 = null;
         String fileContent;
         ObjectWriter objectWriter = null;
+        List<DataInput> inputData = null;
         List<Goleador> goleadores = null;
         List<Referencia> referencias = null;
+        DataInput input = null;
         Referencia referenciaEspania = null, referenciaItalia = null;
         PorteroJugador porteroJugador = null;
         PorcentajesPosesion porcentajesPosesion = null;
@@ -50,8 +53,10 @@ public class EventsStatBomb {
             file = new File("3795220.json");
             file2 = new File("eventos.json");
             fileContent = FileUtils.readFileToString(file, EventsStatBomb.ENCODE);
+            inputData = new ArrayList<DataInput>();
             goleadores = new ArrayList<Goleador>();
             referencias = new ArrayList<Referencia>();
+            input = new DataInput();
             JsonNode eventsJsonNode = Json.mapper().readTree(fileContent);
             if(eventsJsonNode.isArray())
             {
@@ -65,12 +70,12 @@ public class EventsStatBomb {
                     if(eventsDataJsonNode.has("minute"))
                     {
                         final JsonNode minuteNode = eventsDataJsonNode.get("minute");
-                        minute = Integer.parseInt(minuteNode.asText());
+                        input.setMinute(Integer.parseInt(minuteNode.asText()));
                     }
                     if(eventsDataJsonNode.has("second"))
                     {
                         final JsonNode secondNode = eventsDataJsonNode.get("second");
-                        second = Integer.parseInt(secondNode.asText());
+                        input.setSecond(Integer.parseInt(secondNode.asText()));
                     }
                     if(eventsDataJsonNode.has("possession_team"))
                     {
