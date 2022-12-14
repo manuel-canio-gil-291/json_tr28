@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import es.mcg.errors.EventsError;
 import es.mcg.input.data.DataInput;
+import es.mcg.input.data.PossessionTeam;
 import es.mcg.output.data.Goleador;
 import es.mcg.output.data.PartidoCompleto;
 import es.mcg.output.data.PorcentajesPosesion;
@@ -79,13 +80,16 @@ public class EventsStatBomb {
                     }
                     if(eventsDataJsonNode.has("possession_team"))
                     {
+                        PossessionTeam possessionTeam = null;
                         JsonNode possessionTeamNode = eventsDataJsonNode.get("possession_team");
                         if(possessionTeamNode.isObject())
                         {
+                            possessionTeam = new PossessionTeam();
                             JsonNode possessionTeamObjectNode = (ObjectNode) possessionTeamNode;
                             if(possessionTeamObjectNode.has("name"))
                             {
                                 final JsonNode nameNode = possessionTeamObjectNode.get("name");
+                                possessionTeam.setName(nameNode.asText());
                                 if(nameNode.asText().equals("Spain"))
                                 {
                                     posesionesEspania = posesionesEspania + 1.0;
@@ -191,6 +195,7 @@ public class EventsStatBomb {
                             }
                         }
                     }
+                    inputData.add(input);
                     if(minute == 45 && second == 2)
                     {
                         primerTiempo = new PrimerTiempo();
