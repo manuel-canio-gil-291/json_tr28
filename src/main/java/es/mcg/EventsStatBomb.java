@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import es.mcg.errors.EventsError;
 import es.mcg.input.data.DataInput;
+import es.mcg.input.data.Duel;
 import es.mcg.input.data.Outcome;
 import es.mcg.input.data.Pass;
 import es.mcg.input.data.Player;
@@ -26,6 +27,7 @@ import es.mcg.input.data.Shot;
 import es.mcg.input.data.Team;
 import es.mcg.output.data.DataOutput;
 import es.mcg.output.data.Goleador;
+import es.mcg.output.data.Luchador;
 import es.mcg.output.data.PartidoCompleto;
 import es.mcg.output.data.PorcentajesPosesion;
 import es.mcg.output.data.PorteroJugador;
@@ -52,8 +54,10 @@ public class EventsStatBomb {
         PrimerTiempo primerTiempo = null;
         SegundoTiempo segundoTiempo = null;
         PartidoCompleto partidoCompleto = null;
+        Luchador luchador = null;
         Integer pasePorteroItalia = 0, pasePorteroEspania = 0;
         Integer pasesItalia = 0, pasesEspania = 0;
+        Integer dueloGanadoEspania = 0, dueloGanadoItalia = 0;
         Double posesionesEspania = 0.0, posesionesItalia = 0.0;
         String equipo = "";
         try 
@@ -195,10 +199,40 @@ public class EventsStatBomb {
                             input.setPass(pass);
                         }
                     }
+                    if(eventsDataJsonNode.has("duel"))
+                    {
+                        Duel duel = new Duel();
+                        JsonNode duelNode = eventsDataJsonNode.get("duel");
+                        if(duelNode.isObject())
+                        {
+                            JsonNode duelObjectNode = (ObjectNode) duelNode;
+                            
+                            if(duelObjectNode.has("outcome"))
+                            {
+                                Outcome outcome = new Outcome();
+                                JsonNode outcomeNode = duelObjectNode.get("outcome");
+                                if(outcomeNode.isObject())
+                                {
+                                    JsonNode outcomeObjectNode = (ObjectNode) outcomeNode;
+                                    
+                                    if(outcomeObjectNode.has("name"))
+                                    {
+                                        final JsonNode nameNode = outcomeObjectNode.get("name");
+                                        outcome.setName(nameNode.asText());
+                                    }
+                                     
+                                }
+                                duel.setOutcome(outcome);  
+                            }
+                            
+                        }
+                        input.setDuel(duel);
+                    }
                     inputData.add(input);
                     
                 }
             }
+            String luchadorEspania = "", equipoluchadorES = "", luchadorItalia = "", equipoLuchadorIT = "";
             outputData = new ArrayList<DataOutput>();
             output = new DataOutput();
             for(int i = 0; i < inputData.size(); i++)
@@ -256,7 +290,39 @@ public class EventsStatBomb {
                 {
                     pasesItalia++;
                 }
+                //if(inputData.get(i).getPossession_team().getName().equals("Spain"))
+                //{
+                //    if(inputData.get(i).getDuel().getOutcome().getName().equals("Won"))
+                //    {
+                //        equipoluchadorES = inputData.get(i).getPossession_team().getName();
+                //        luchadorEspania = inputData.get(i).getPlayer().getName();
+                //        dueloGanadoEspania++;
+                //    }
+                //}
+                //else if(inputData.get(i).getPossession_team().getName().equals("Italy"))
+                //{
+                //    if(inputData.get(i).getDuel().getOutcome().getName().equals("Won"))
+                //    {
+                //        equipoLuchadorIT = inputData.get(i).getPossession_team().getName();
+                //        luchadorItalia = inputData.get(i).getPlayer().getName();
+                //        dueloGanadoItalia++;
+                //    }
+                //}
             }
+            luchador = new Luchador();
+            if(dueloGanadoEspania > dueloGanadoItalia)
+            {
+                luchador.setEquipo(equipoluchadorES);
+                luchador.setNombre(luchadorEspania);
+                luchador.setDuelos_ganados(dueloGanadoEspania);
+            }
+            else
+            {
+                luchador.setEquipo(equipoLuchadorIT);
+                luchador.setNombre(luchadorItalia);
+                luchador.setDuelos_ganados(dueloGanadoItalia);
+            }
+            output.setLuchador(luchador);
             porteroJugador = new PorteroJugador();
             if(pasePorteroEspania > pasePorteroItalia)
             {
