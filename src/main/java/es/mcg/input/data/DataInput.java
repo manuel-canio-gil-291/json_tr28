@@ -7,6 +7,7 @@ public class DataInput {
     private Player player;
     private Shot shot;
     private Pass pass;
+    private Duel duel;
     public DataInput() {
         
     }
@@ -51,6 +52,12 @@ public class DataInput {
     }
     public void setPass(Pass pass) {
         this.pass = pass;
+    }
+    public Duel getDuel() {
+        return duel;
+    }
+    public void setDuel(Duel duel) {
+        this.duel = duel;
     }
     
     
