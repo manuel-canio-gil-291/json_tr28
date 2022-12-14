@@ -6,6 +6,7 @@ public class DataInput {
     private Team team;
     private Player player;
     private Shot shot;
+    private Pass pass;
     public DataInput() {
         
     }
@@ -45,6 +46,12 @@ public class DataInput {
     public void setShot(Shot shot) {
         this.shot = shot;
     }
-
+    public Pass getPass() {
+        return pass;
+    }
+    public void setPass(Pass pass) {
+        this.pass = pass;
+    }
+    
     
 }
