@@ -6,13 +6,18 @@
     "segundo" : 3
   },
   "referencia" : {
-    "equipo" : "Espania",
-    "nombre" : "Pedri",
+    "equipo" : "Italia",
+    "nombre" : "Bonucci",
     "pases" : 0
   },
   "portero_jugador" : {
     "equipo" : "Italia",
     "nombre" : "Donnaruma",
     "pases" : 24
+  },
+  "luchador" : {
+    "equipo" : "",
+    "nombre" : "",
+    "duelos_ganados" : 0
   }
 } ]
