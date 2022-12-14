@@ -211,7 +211,7 @@ public class EventsStatBomb {
                 {
                     posesionesItalia = posesionesItalia + 1.0;
                 }
-                if(inputData.get(i).getMinute() == 45 && inputData.get(i).getSecond() == 2)
+                if(inputData.get(i).getMinute().equals(45) && inputData.get(i).getSecond().equals(2))
                 {
                     primerTiempo = new PrimerTiempo();
                     Double porcentajePosesionEspania = 0.0, porcentajePosesionItalia = 0.0;
@@ -222,7 +222,7 @@ public class EventsStatBomb {
                     posesionesEspania = 0.0;
                     posesionesItalia = 0.0;
                 }
-                if(inputData.get(i).getMinute() == 90 && inputData.get(i).getSecond() == 48)
+                if(inputData.get(i).getMinute().equals(90) && inputData.get(i).getSecond().equals(48))
                 {
                     segundoTiempo = new SegundoTiempo();
                     Double porcentajePosesionEspania = 0.0, porcentajePosesionItalia = 0.0;
@@ -233,7 +233,10 @@ public class EventsStatBomb {
                     partidoCompleto = new PartidoCompleto();
                     partidoCompleto.setEspania((primerTiempo.getEspania()+segundoTiempo.getEspania())/2);
                     partidoCompleto.setItalia((primerTiempo.getItalia()+segundoTiempo.getItalia())/2);
-                    porcentajesPosesion = new PorcentajesPosesion(primerTiempo, segundoTiempo, partidoCompleto);
+                    porcentajesPosesion = new PorcentajesPosesion();
+                    porcentajesPosesion.setPrimer_tiempo(primerTiempo);
+                    porcentajesPosesion.setSegundo_tiempo(segundoTiempo);
+                    porcentajesPosesion.setPartido_completo(partidoCompleto);
                     output.setPorcentajes_posesion(porcentajesPosesion);
                 }
                 if(inputData.get(i).getShot().getOutcome().getName().equals("Goal"))
@@ -279,6 +282,7 @@ public class EventsStatBomb {
             referenciaItalia.setPases(pasesItalia);
             output.setReferenciaIt(referenciaItalia);
             outputData.add(output);
+            System.out.println(outputData);
             objectWriter = Json.mapper().writer(new DefaultPrettyPrinter());
             objectWriter.writeValue(file2, outputData);
         } 
