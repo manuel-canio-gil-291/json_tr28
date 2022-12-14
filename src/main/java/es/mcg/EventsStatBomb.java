@@ -43,10 +43,9 @@ public class EventsStatBomb {
         ObjectWriter objectWriter = null;
         List<DataInput> inputData = null;
         List<DataOutput> outputData = null;
-        List<Goleador> goleadores = null;
-        List<Referencia> referencias = null;
         Goleador goleador = null;
         DataInput input = null;
+        DataOutput output = null;
         Referencia referenciaEspania = null, referenciaItalia = null;
         PorteroJugador porteroJugador = null;
         PorcentajesPosesion porcentajesPosesion = null;
@@ -63,8 +62,6 @@ public class EventsStatBomb {
             file2 = new File("eventos.json");
             fileContent = FileUtils.readFileToString(file, EventsStatBomb.ENCODE);
             inputData = new ArrayList<DataInput>();
-            goleadores = new ArrayList<Goleador>();
-            referencias = new ArrayList<Referencia>();
             input = new DataInput();
             JsonNode eventsJsonNode = Json.mapper().readTree(fileContent);
             if(eventsJsonNode.isArray())
@@ -203,6 +200,7 @@ public class EventsStatBomb {
                 }
             }
             outputData = new ArrayList<DataOutput>();
+            output = new DataOutput();
             for(int i = 0; i < inputData.size(); i++)
             {
                 if(inputData.get(i).getPossession_team().getName().equals("Spain"))
@@ -236,6 +234,7 @@ public class EventsStatBomb {
                     partidoCompleto.setEspania((primerTiempo.getEspania()+segundoTiempo.getEspania())/2);
                     partidoCompleto.setItalia((primerTiempo.getItalia()+segundoTiempo.getItalia())/2);
                     porcentajesPosesion = new PorcentajesPosesion(primerTiempo, segundoTiempo, partidoCompleto);
+                    output.setPorcentajes_posesion(porcentajesPosesion);
                 }
                 if(inputData.get(i).getShot().getOutcome().getName().equals("Goal"))
                 {
@@ -244,6 +243,7 @@ public class EventsStatBomb {
                     goleador.setSegundo(inputData.get(i).getSecond());
                     goleador.setEquipo(inputData.get(i).getPossession_team().getName());
                     goleador.setNombre(inputData.get(i).getPlayer().getName());
+                    output.setGoleador(goleador);
                 }
                 if(inputData.get(i).getPass().getRecipient().getName().equals("Pedro González López"))
                 {
@@ -267,21 +267,20 @@ public class EventsStatBomb {
                 porteroJugador.setNombre("Donnaruma");
                 porteroJugador.setPases(pasePorteroItalia);
             }
+            output.setPortero_jugador(porteroJugador);
             referenciaEspania = new Referencia();
             referenciaItalia = new Referencia();
             referenciaEspania.setEquipo("Espania");
             referenciaEspania.setNombre("Pedri");
             referenciaEspania.setPases(pasesEspania);
-            referencias.add(referenciaEspania);
+            output.setReferenciaEs(referenciaEspania);
             referenciaItalia.setEquipo("Italia");
             referenciaItalia.setNombre("Bonucci");
             referenciaItalia.setPases(pasesItalia);
-            referencias.add(referenciaItalia);
+            output.setReferenciaIt(referenciaItalia);
+            outputData.add(output);
             objectWriter = Json.mapper().writer(new DefaultPrettyPrinter());
-            objectWriter.writeValue(file2, goleadores);
-            objectWriter.writeValue(file2, referencias);
-            objectWriter.writeValue(file2, porteroJugador);
-            objectWriter.writeValue(file2, porcentajesPosesion);
+            objectWriter.writeValue(file2, outputData);
         } 
         catch (Exception jsonException) 
         {
