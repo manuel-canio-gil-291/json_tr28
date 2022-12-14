@@ -22,8 +22,10 @@ public class Json {
         final ObjectMapper mapper = new ObjectMapper();
 
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.configure(SerializationFeature.FLUSH_AFTER_WRITE_VALUE, true);
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
+        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 
         return mapper;
     }
