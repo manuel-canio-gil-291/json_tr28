@@ -51,5 +51,8 @@ public class Goleador {
         this.segundo = segundo;
     }
 
-    
+    @Override
+    public String toString() {
+        return "[\n\tequipo: " + equipo + "\n\tnombre: " + nombre + "\n\tminuto: " + minuto + "\n\tsegundo: " + segundo + "\n]";
+    }
 }

@@ -29,4 +29,11 @@ public class PartidoCompleto {
     public void setItalia(Double italia) {
         this.italia = italia;
     }
+
+    @Override
+    public String toString() {
+        return "PartidoCompleto [espania=" + espania + ", italia=" + italia + "]";
+    }
+
+    
 }

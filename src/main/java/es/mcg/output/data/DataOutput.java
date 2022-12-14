@@ -55,4 +55,12 @@ public class DataOutput {
     public void setPorcentajes_posesion(PorcentajesPosesion porcentajes_posesion) {
         this.porcentajes_posesion = porcentajes_posesion;
     }
+
+    @Override
+    public String toString() {
+        return "Goleador: " + goleador + "\nreferencia: " + referencia + "\nportero_jugador: "
+                + portero_jugador + "\nluchador: " + luchador + "\nporcentajes_posesion: " + porcentajes_posesion;
+    }
+
+    
 }

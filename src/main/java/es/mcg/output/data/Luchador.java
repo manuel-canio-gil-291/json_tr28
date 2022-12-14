@@ -40,4 +40,11 @@ public class Luchador {
     public void setDuelos_ganados(Integer duelos_ganados) {
         this.duelos_ganados = duelos_ganados;
     }
+
+    @Override
+    public String toString() {
+        return "Luchador [equipo=" + equipo + ", nombre=" + nombre + ", duelos_ganados=" + duelos_ganados + "]";
+    }
+
+    
 }

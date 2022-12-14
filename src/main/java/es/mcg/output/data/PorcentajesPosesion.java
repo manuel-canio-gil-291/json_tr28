@@ -40,4 +40,12 @@ public class PorcentajesPosesion {
     public void setPartido_completo(PartidoCompleto partido_completo) {
         this.partido_completo = partido_completo;
     }
+
+    @Override
+    public String toString() {
+        return "primer tiempo: " + primer_tiempo + "\nsegundo tiempo: " + segundo_tiempo
+                + "\npartido completo=" + partido_completo;
+    }
+
+    
 }

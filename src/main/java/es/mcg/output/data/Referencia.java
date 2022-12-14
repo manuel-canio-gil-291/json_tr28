@@ -41,5 +41,10 @@ public class Referencia {
         this.pases = pases;
     }
 
+    @Override
+    public String toString() {
+        return "[\n\tequipo: " + equipo + "\n\tnombre: " + nombre + "\n\tpases: " + pases + "\n]";
+    }
+
     
 }
