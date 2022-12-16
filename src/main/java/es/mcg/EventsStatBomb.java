@@ -326,24 +326,24 @@ public class EventsStatBomb {
             porteroJugador = new PorteroJugador();
             if(pasePorteroEspania > pasePorteroItalia)
             {
-                porteroJugador.setEquipo("Espania");
+                porteroJugador.setEquipo("Spain");
                 porteroJugador.setNombre("Unai Simon");
                 porteroJugador.setPases(pasePorteroEspania);
             }
             else
             {
-                porteroJugador.setEquipo("Italia");
+                porteroJugador.setEquipo("Italy");
                 porteroJugador.setNombre("Donnaruma");
                 porteroJugador.setPases(pasePorteroItalia);
             }
             output.setPortero_jugador(porteroJugador);
             referenciaEspania = new Referencia();
             referenciaItalia = new Referencia();
-            referenciaEspania.setEquipo("Espania");
+            referenciaEspania.setEquipo("Spain");
             referenciaEspania.setNombre("Pedri");
             referenciaEspania.setPases(pasesEspania);
             output.setReferenciaEs(referenciaEspania);
-            referenciaItalia.setEquipo("Italia");
+            referenciaItalia.setEquipo("Italy");
             referenciaItalia.setNombre("Bonucci");
             referenciaItalia.setPases(pasesItalia);
             output.setReferenciaIt(referenciaItalia);
