@@ -290,19 +290,19 @@ public class EventsStatBomb {
                 {
                     pasesItalia++;
                 }
-                //if(inputData.get(i).getPossession_team().getName().equals("Spain"))
-                //{
-                //    if(inputData.get(i).getDuel().getOutcome().getName().equals("Won"))
-                //    {
-                //        equipoluchadorES = inputData.get(i).getPossession_team().getName();
-                //        luchadorEspania = inputData.get(i).getPlayer().getName();
-                //        dueloGanadoEspania++;
-                //    }
-                //}
+                if(inputData.get(i).getPossession_team().getName().equals("Spain"))
+                {
+                    if(inputData.get(i).getDuel().getOutcome().getName().equals("Won"))
+                    {
+                        equipoluchadorES = inputData.get(i).getPossession_team().getName();
+                        luchadorEspania = inputData.get(i).getPlayer().getName();
+                        dueloGanadoEspania++;
+                    }
+                }
                 //else if(inputData.get(i).getPossession_team().getName().equals("Italy"))
                 //{
                 //    if(inputData.get(i).getDuel().getOutcome().getName().equals("Won"))
-                //    {
+                //   {
                 //        equipoLuchadorIT = inputData.get(i).getPossession_team().getName();
                 //        luchadorItalia = inputData.get(i).getPlayer().getName();
                 //        dueloGanadoItalia++;
